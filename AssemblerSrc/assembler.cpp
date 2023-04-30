@@ -23,7 +23,8 @@ std::vector <Operation> oplist {
 	{"SWP", 7, false},
 	{"AOUT", 8, false},
 	{"SOUT", 9, false},
-	{"JMP", 10, true}
+	{"JMP", 10, true},
+	{"HLT", 128, false}
 };
 
 template <typename I> std::string getHexStr(I w) {
