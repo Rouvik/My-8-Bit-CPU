@@ -18,7 +18,8 @@ rasm [name of assembly file] [(optional) output file name]
 Read the [Instructions.md](https://github.com/Rouvik/My-8-Bit-CPU/blob/main/Instructions.md) to know more!
 
 ## Image examples:
-<b>If you see this then sorry 😅 I actually didn't get time to add any images to the README</b>
+### Basic Circuit Schematic:
+![8-Bit-CPU-Schematic]()
 
 ## Contact:
 [majirouvik@gmail.com](mailto:majirouvik@gmail.com)
