@@ -24,6 +24,16 @@ std::vector <Operation> oplist {
 	{"AOUT", 8, false},
 	{"SOUT", 9, false},
 	{"JMP", 10, true},
+	{"ATX", 11, false},
+	{"ATY", 12, false},
+	{"STX", 13, false},
+	{"STY", 14, false},
+	{"XTR", 15, false},
+	{"YTR", 16, false},
+	{"RTX", 17, false},
+	{"RTY", 18, false},
+	{"ATR", 19, false},
+	{"STR", 20, false},
 	{"HLT", 128, false}
 };
 
