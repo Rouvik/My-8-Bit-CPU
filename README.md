@@ -1,4 +1,4 @@
-# My-8-Bit-CPU
+# My-8-Bit-CPU (Rouvik-CPU Mark-2)
 Compilers, data sheets, resources and .circ files for my first 8-Bit CPU (Rouvik CPU - II)
 
 ## Requirements to run this project:
@@ -13,6 +13,9 @@ file in AssemblerSrc to get the assembler executable and that's it!
 
 ## RASM usage:
 rasm [name of assembly file] [(optional) output file name]
+
+## Details about the instruction set:
+Read the [Instructions.md](https://raw.githubusercontent.com/Rouvik/My-8-Bit-CPU/main/Instructions.md) to know more!
 
 ## Image examples:
 <b>If you see this then sorry 😅 I actually didn't get time to add any images to the README</b>
