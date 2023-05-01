@@ -1,7 +1,8 @@
 # ignore any sort of source code files
-*.s
-*.prog
-*.hex
+/*.s
+/*.prog
+/*.hex
 
 # ignore the assembler in /Programs
 /Programs/rasm
+/Programs/*.hex
