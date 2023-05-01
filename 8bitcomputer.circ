@@ -473,7 +473,7 @@
     <comp lib="4" loc="(1120,50)" name="ROM">
       <a name="appearance" val="logisim_evolution"/>
       <a name="contents">addr/data: 8 16
-101 300 1300 600 1100 700 a02
+100 301 1300 600 1100 a02
 </a>
       <a name="dataWidth" val="16"/>
       <a name="label" val="Program_ROM"/>
@@ -536,9 +536,6 @@
     </comp>
     <comp lib="8" loc="(880,922)" name="Text">
       <a name="text" val="clear automatically"/>
-    </comp>
-    <comp lib="8" loc="(990,46)" name="Text">
-      <a name="text" val="Program ROM"/>
     </comp>
     <comp lib="8" loc="(998,644)" name="Text">
       <a name="font" val="SansSerif bold 19"/>
