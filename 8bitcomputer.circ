@@ -211,8 +211,12 @@
       <rect fill="none" height="60" stroke="#000000" stroke-width="2" width="200" x="60" y="50"/>
       <text dominant-baseline="alphabetic" fill="#ffffff" font-family="Dialog" font-size="14" font-weight="bold" text-anchor="middle" x="160" y="104">main</text>
       <circ-anchor facing="east" height="6" width="6" x="47" y="57"/>
-      <circ-port height="8" pin="960,560" width="8" x="46" y="56"/>
+      <circ-port height="8" pin="1000,620" width="8" x="46" y="56"/>
     </appear>
+    <comp lib="0" loc="(1000,620)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="north"/>
+    </comp>
     <comp lib="0" loc="(1040,900)" name="Tunnel">
       <a name="facing" val="south"/>
       <a name="label" val="XO"/>
@@ -393,13 +397,12 @@
       <a name="facing" val="south"/>
       <a name="label" val="HLT"/>
     </comp>
-    <comp lib="0" loc="(960,560)" name="Pin">
-      <a name="appearance" val="classic"/>
-      <a name="facing" val="north"/>
-    </comp>
     <comp lib="0" loc="(990,900)" name="Tunnel">
       <a name="facing" val="south"/>
       <a name="label" val="XI"/>
+    </comp>
+    <comp lib="1" loc="(1010,600)" name="Controlled Buffer">
+      <a name="width" val="8"/>
     </comp>
     <comp lib="1" loc="(190,30)" name="OR Gate"/>
     <comp lib="1" loc="(520,750)" name="Controlled Buffer">
@@ -474,11 +477,6 @@
 00010100001 0000000000010
 10000000000 1000000000000 # HLT
 </a>
-    </comp>
-    <comp lib="1" loc="(950,520)" name="Controlled Buffer">
-      <a name="control" val="left"/>
-      <a name="facing" val="west"/>
-      <a name="width" val="8"/>
     </comp>
     <comp lib="4" loc="(1120,50)" name="ROM">
       <a name="appearance" val="logisim_evolution"/>
@@ -557,6 +555,8 @@
       <a name="text" val="clear automatically"/>
     </comp>
     <comp loc="(510,430)" name="AU"/>
+    <wire from="(1000,610)" to="(1000,620)"/>
+    <wire from="(1010,600)" to="(1170,600)"/>
     <wire from="(1040,170)" to="(1050,170)"/>
     <wire from="(1040,900)" to="(1040,940)"/>
     <wire from="(1040,940)" to="(1050,940)"/>
@@ -648,12 +648,12 @@
     <wire from="(670,200)" to="(670,220)"/>
     <wire from="(670,220)" to="(670,430)"/>
     <wire from="(670,220)" to="(840,220)"/>
-    <wire from="(670,430)" to="(670,520)"/>
+    <wire from="(670,430)" to="(670,570)"/>
     <wire from="(670,50)" to="(670,120)"/>
     <wire from="(670,50)" to="(730,50)"/>
-    <wire from="(670,520)" to="(670,570)"/>
-    <wire from="(670,520)" to="(950,520)"/>
-    <wire from="(670,570)" to="(670,640)"/>
+    <wire from="(670,570)" to="(670,600)"/>
+    <wire from="(670,600)" to="(670,640)"/>
+    <wire from="(670,600)" to="(990,600)"/>
     <wire from="(670,640)" to="(670,650)"/>
     <wire from="(670,650)" to="(670,750)"/>
     <wire from="(670,650)" to="(780,650)"/>
@@ -699,8 +699,6 @@
     <wire from="(930,780)" to="(970,780)"/>
     <wire from="(930,950)" to="(940,950)"/>
     <wire from="(940,900)" to="(940,950)"/>
-    <wire from="(960,530)" to="(960,560)"/>
-    <wire from="(970,520)" to="(1170,520)"/>
     <wire from="(970,670)" to="(970,780)"/>
     <wire from="(990,900)" to="(990,950)"/>
   </circuit>
