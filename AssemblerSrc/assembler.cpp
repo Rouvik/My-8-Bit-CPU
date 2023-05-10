@@ -34,6 +34,8 @@ std::vector <Operation> oplist {
 	{"RTY", 18, false},
 	{"ATR", 19, false},
 	{"STR", 20, false},
+	{"SADR", 21, true},
+	{"XLM", 22, false},
 	{"HLT", 128, false}
 };
 
