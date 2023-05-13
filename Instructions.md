@@ -22,6 +22,6 @@
 |RTY|10010|Copy from R to Y register|
 |ATR|10011|Add and store to R register|
 |STR|10100|Subtract and store to R register|
-|SADR|10101|Store address for a data to be fetched or stored for RAM|
+|SAD|10101|Store address for a data to be fetched or stored for RAM|
 |XLM|10110|Load a data from the specified address in `SADR` to X Register|
 |XTM|10111|Store a data to the specified address in `SADR` from X Register|

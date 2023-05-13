@@ -1,7 +1,7 @@
-sadr 5
-ldx 23
-xtm
-ldx 125
-xlm
-xout
+sad 5
+ldr 23
+rtm
+ldr 125
+rlm
+rout
 hlt
