@@ -39,6 +39,11 @@ std::vector <Operation> oplist {
 	{"XTM", 23, false},
 	{"RLM", 24, false},
 	{"RTM", 25, false},
+	{"YLM", 26, false},
+	{"YTM", 27, false},
+	{"SADR", 28, false},
+	{"SADX", 29, false},
+	{"SADY", 30, false},
 	{"HLT", 128, false}
 };
 
