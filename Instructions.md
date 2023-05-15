@@ -32,3 +32,4 @@
 |SADR|11100|Set the `Address Register` to the value in R Register|
 |SADX|11101|Set the `Address Register` to the value in X Register|
 |SADY|11110|Set the `Address Register` to the value in Y Register|
+
