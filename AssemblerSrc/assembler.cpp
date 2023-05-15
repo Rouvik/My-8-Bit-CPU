@@ -34,6 +34,16 @@ std::vector <Operation> oplist {
 	{"RTY", 18, false},
 	{"ATR", 19, false},
 	{"STR", 20, false},
+	{"SAD", 21, true},
+	{"XLM", 22, false},
+	{"XTM", 23, false},
+	{"RLM", 24, false},
+	{"RTM", 25, false},
+	{"YLM", 26, false},
+	{"YTM", 27, false},
+	{"SADR", 28, false},
+	{"SADX", 29, false},
+	{"SADY", 30, false},
 	{"HLT", 128, false}
 };
 
@@ -51,9 +61,9 @@ template <typename I> std::string getHexStr(I w) {
 	return rc;
 }
 
-std::string processLine(std::string line) {
+std::string processLine(int lno, std::string line) {
 	line = line.substr(0, line.find(";")); // delete trailing comment
-	std::cout << line << "\n";
+
 	std::stringstream buf(line);
 	std::string opcode; // store the opcode in here
 	buf >> opcode;
@@ -74,14 +84,23 @@ std::string processLine(std::string line) {
 	buf >> data;
 
 	// process opcode
+	bool found = false;
 	for(auto& operation : oplist) {
 		if((operation.name).compare(opcode) == 0) {
+			found = true;
 			int value = operation.code << 8; // shift by 8 bit to opcode section
 			if(operation.hasOperand) {
-				value |= std::stoi(data);
+				value |= std::atoi(data.c_str());
 			}
 			return getHexStr<int>(value);
 		}
+	}
+
+	// check if opcode found
+	if(!found) {
+		std::cerr << "Unknown opcode: "
+			  << opcode << " at " << lno
+			  << " setting NOP\n";
 	}
 
 	return "0000"; // return 0 if unknown
@@ -113,10 +132,11 @@ int main(int argc, char** argv) {
 	}
 
 	std::string output = "";
+	int lno = 0;
 	while(!in.eof()) {
 		std::string line = "";
 		getline(in, line); // copy a single line to process
-		output += processLine(line) + " "; // add binary to output buffer
+		output += processLine(++lno, line) + " "; // add binary to output buffer
 	}
 	
 	// close the reading file
