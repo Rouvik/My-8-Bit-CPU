@@ -22,11 +22,8 @@ Read the [Instructions.md](https://github.com/Rouvik/My-8-Bit-CPU/blob/main/Inst
 ### Basic Circuit Schematic:
 ![8-Bit-CPU-Schematic](https://github.com/Rouvik/My-8-Bit-CPU/blob/main/Images/Circuit.png?raw=true)
 
-### Where to add the `MicroInstruction_PROM.txt`:
-![MILoad.png](https://github.com/Rouvik/My-8-Bit-CPU/blob/main/Images/MI_Load.png?raw=true)
-
-### Where to add the assembled program:
-![ProgLoad.png](https://github.com/Rouvik/My-8-Bit-CPU/blob/main/Images/Prog_Load.png?raw=true)
+### Where to add the `MicroInstruction_PROM.txt` and `Assembled hex`:
+![MILoad.png](https://github.com/Rouvik/My-8-Bit-CPU/blob/main/Images/MI_And_Prog_Load.png?raw=true)
 
 ### Brief image based hardware explanation:
 ![Expl.png](https://github.com/Rouvik/My-8-Bit-CPU/blob/main/Images/Expl.png?raw=true)

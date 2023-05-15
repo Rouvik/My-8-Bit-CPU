@@ -23,5 +23,12 @@
 |ATR|10011|Add and store to R register|
 |STR|10100|Subtract and store to R register|
 |SAD|10101|Store address for a data to be fetched or stored for RAM|
-|XLM|10110|Load a data from the specified address in `SADR` to X Register|
-|XTM|10111|Store a data to the specified address in `SADR` from X Register|
+|XLM|10110|Load a data from the specified address in `Address Register` to X Register|
+|XTM|10111|Store a data to the specified address in `Address Register` from X Register|
+|RLM|11000|Load a data from the specified address in `Address Register` to R Register|
+|RTM|11001|Store a data to the specified address in `Address Register` from R Register|
+|YLM|11010|Load a data from the specified address in `Address Register` to Y Register|
+|YTM|11011|Store a data to the specified address in `Address Register` from Y Register|
+|SADR|11100|Set the `Address Register` to the value in R Register|
+|SADX|11101|Set the `Address Register` to the value in X Register|
+|SADY|11110|Set the `Address Register` to the value in Y Register|
