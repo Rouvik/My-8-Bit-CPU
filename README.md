@@ -28,7 +28,6 @@ Read the [Instructions.md](https://github.com/Rouvik/My-8-Bit-CPU/blob/main/Inst
 ### Brief image based hardware explanation:
 ![Expl.png](https://github.com/Rouvik/My-8-Bit-CPU/blob/main/Images/Expl.png?raw=true)
 
-
 ## Contact:
 [majirouvik@gmail.com](mailto:majirouvik@gmail.com)
 
