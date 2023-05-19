@@ -3,7 +3,9 @@
 
 ldx 0
 ldy 1
-atr
-rout ; display
-rtx
-jmp 2
+
+loop:
+	atr
+	rout ; display
+	rtx
+	jmp loop

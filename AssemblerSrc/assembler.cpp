@@ -3,13 +3,101 @@
 #include <string>
 #include <sstream>
 #include <cctype>
+#include <locale>
 #include <algorithm>
 #include <vector>
+
+// the actual line number the code is at
+int lineNumber = 0;
+
+// number of opcode
+int opNumber = 0;
+
+// container to store labels
+struct Label {
+	std::string name;
+	int lbpos;
+};
+
+// trim from start (in place)
+static inline void ltrim(std::string &s) {
+	s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
+		return !std::isspace(ch);
+	}));
+}
+
+// trim from end
+static inline void rtrim(std::string &s) {
+	s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
+		return !std::isspace(ch);
+	}).base(), s.end());
+}
+
+// trim from both ends (in place)
+static inline void trim(std::string &s) {
+    rtrim(s);
+    ltrim(s);
+}
+
+// stores the label to indivitual code pieces
+std::vector <Label> labels;
+
+// processes labels and returns an appropriate address
+int processLabel(std::string lb) {
+	if(std::isalpha(lb[0])) { // labeled address
+		int offsetPos = lb.find("+");
+		if(offsetPos != -1) { // uses offset label
+			std::string lbname = lb.substr(0, offsetPos);
+			rtrim(lbname);
+
+			std::vector<Label>::iterator it = std::find_if(labels.begin(),
+								       labels.end(),
+					     			       [lbname](Label x) {
+				return !(x.name.compare(lbname));	
+			});
+
+			if(it == labels.end()) { // no match
+				std::cerr << "No such label name: " << lbname << " at " << lineNumber << "\n";
+				return 0;
+			}
+
+			int offset = std::atoi((lb.substr(offsetPos + 1)).c_str());
+			return (*it).lbpos + offset;
+		} else {
+			std::vector<Label>::iterator it = std::find_if(labels.begin(),
+								       labels.end(),
+								       [lb](Label x) {
+				return !(x.name.compare(lb));
+			});
+
+			if(it == labels.end()) { // no match
+                                std::cerr << "No such label name: " << lb << " at " << lineNumber << "\n";
+                                return 0;
+                         }
+
+			return (*it).lbpos;
+		}
+	} else { // it is nothing but raw address
+		return atoi(lb.c_str());
+	}
+}
+
+// copys everything from a stream
+std::string gulp(std::istream &in, short bufSize = 255)
+{
+    std::string ret;
+    char buffer[bufSize];
+    while (in.read(buffer, sizeof(buffer)))
+        ret.append(buffer, sizeof(buffer));
+    ret.append(buffer, in.gcount());
+    return ret;
+}
 
 struct Operation {
 	std::string name;
 	int code;
 	bool hasOperand;
+	bool usesLabels = false;
 };
 
 std::vector <Operation> oplist {
@@ -23,7 +111,7 @@ std::vector <Operation> oplist {
 	{"SWP", 7, false},
 	{"AOUT", 8, false},
 	{"SOUT", 9, false},
-	{"JMP", 10, true},
+	{"JMP", 10, true, true}, // this op uses labels
 	{"ATX", 11, false},
 	{"ATY", 12, false},
 	{"STX", 13, false},
@@ -61,8 +149,24 @@ template <typename I> std::string getHexStr(I w) {
 	return rc;
 }
 
-std::string processLine(int lno, std::string line) {
+std::string processLine(std::string line) {
+	++lineNumber; // process line number
+
 	line = line.substr(0, line.find(";")); // delete trailing comment
+
+	int colpos = line.find(":");
+	if(colpos != -1) {
+		std::string lb = line.substr(0, colpos);
+		trim(lb);
+
+		if(lb.find(" ") != -1) {
+			std::cerr << "Bad label: " << lb << "\n";
+			return "0000 ";
+		}
+
+		labels.push_back({lb, opNumber});
+		return ""; // return nothing and register label
+	}
 
 	std::stringstream buf(line);
 	std::string opcode; // store the opcode in here
@@ -72,6 +176,9 @@ std::string processLine(int lno, std::string line) {
 		return (std::string) "";
 	}
 
+	// update opcode number if valid opcode line
+	opNumber++;
+
 	// convert opcode to uppercase
 	std::transform(opcode.begin(), opcode.end(),
 		       opcode.begin(), 
@@ -80,8 +187,8 @@ std::string processLine(int lno, std::string line) {
 			 return std::toupper(c);	
 		       });
 
-	std::string data; // store the operand or data in it (if required)
-	buf >> data;
+	std::string data = gulp(buf); // store the operand or data in it (if required)
+	trim(data);
 
 	// process opcode
 	bool found = false;
@@ -89,21 +196,29 @@ std::string processLine(int lno, std::string line) {
 		if((operation.name).compare(opcode) == 0) {
 			found = true;
 			int value = operation.code << 8; // shift by 8 bit to opcode section
-			if(operation.hasOperand) {
+			if(operation.usesLabels) {
+				std::cout << "Operation: " << opcode
+					  << " at " << lineNumber
+					  << " uses labels\n";
+
+				value |= processLabel(data);
+			} else if(operation.hasOperand) {
 				value |= std::atoi(data.c_str());
 			}
-			return getHexStr<int>(value);
+
+			return getHexStr<int>(value) + " ";
 		}
 	}
 
 	// check if opcode found
 	if(!found) {
 		std::cerr << "Unknown opcode: "
-			  << opcode << " at " << lno
+			  << opcode << " at " << lineNumber
 			  << " setting NOP\n";
+		return "0000 "; // return 0 if unknown
 	}
 
-	return "0000"; // return 0 if unknown
+	return ""; // just a case for failure
 		
 }
 
@@ -132,11 +247,10 @@ int main(int argc, char** argv) {
 	}
 
 	std::string output = "";
-	int lno = 0;
 	while(!in.eof()) {
 		std::string line = "";
 		getline(in, line); // copy a single line to process
-		output += processLine(++lno, line) + " "; // add binary to output buffer
+		output += processLine(line); // add binary to output buffer
 	}
 	
 	// close the reading file
@@ -155,6 +269,10 @@ int main(int argc, char** argv) {
 	out.write(head, std::strlen(head));
 	// write the compiled hexcode
 	out.write(output.c_str(), output.size());
-	out.close();	
+	out.close();
+
+	for(struct Label x : labels) {
+		std::cout << x.name << " " << x.lbpos << "\n";
+	}
 	return 0;
 }
