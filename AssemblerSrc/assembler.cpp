@@ -132,6 +132,8 @@ std::vector <Operation> oplist {
 	{"SADR", 28, false},
 	{"SADX", 29, false},
 	{"SADY", 30, false},
+	{"CMP", 31, false},
+	{"JNE", 32, true, true}, // this op uses labels
 	{"HLT", 128, false}
 };
 
