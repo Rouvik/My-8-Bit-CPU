@@ -132,6 +132,11 @@ std::vector <Operation> oplist {
 	{"SADR", 28, false},
 	{"SADX", 29, false},
 	{"SADY", 30, false},
+	{"CMP", 31, false},
+	{"JNE", 32, true, true}, // this op uses labels
+	{"JZE", 33, true, true}, // this op uses labels
+	{"JOV", 34, true, true}, // this op uses labels
+	{"JPE", 35, true, true}, // this op uses labels
 	{"HLT", 128, false}
 };
 
@@ -149,24 +154,50 @@ template <typename I> std::string getHexStr(I w) {
 	return rc;
 }
 
+void pickLabels(std::ifstream& in) {
+	while(!in.eof()) {
+		std::string line = "";
+		getline(in, line);
+
+		line = line.substr(0, line.find(";")); // delete trailing comment
+	
+		int colpos = line.find(":");
+		if(colpos != -1) {
+			std::string lb = line.substr(0, colpos);
+			trim(lb);
+
+			if(lb.find(" ") != -1) {
+				std::cerr << "Bad label: " << lb << "\n";
+			}
+
+			labels.push_back({lb, opNumber});
+			continue;
+		}
+
+		// check for blank line
+		bool not_blank = false;
+		for(int i = 0; i < line.length(); i++) {
+			if(!std::isspace(line[i])) {
+				not_blank = true;
+				break;
+			}
+		}
+		
+		// update op number of valid opcode line
+		if(not_blank) opNumber++;
+	}
+	
+	in.clear(); // erase fail bit
+	in.seekg(0); // seek back to start of stream
+}
+
 std::string processLine(std::string line) {
 	++lineNumber; // process line number
 
 	line = line.substr(0, line.find(";")); // delete trailing comment
-
+	
 	int colpos = line.find(":");
-	if(colpos != -1) {
-		std::string lb = line.substr(0, colpos);
-		trim(lb);
-
-		if(lb.find(" ") != -1) {
-			std::cerr << "Bad label: " << lb << "\n";
-			return "0000 ";
-		}
-
-		labels.push_back({lb, opNumber});
-		return ""; // return nothing and register label
-	}
+	if(colpos != -1) return ""; // labels already picked ignore
 
 	std::stringstream buf(line);
 	std::string opcode; // store the opcode in here
@@ -175,9 +206,6 @@ std::string processLine(std::string line) {
 	if(opcode.compare("") == 0) { // no opcode found (ignore line)
 		return (std::string) "";
 	}
-
-	// update opcode number if valid opcode line
-	opNumber++;
 
 	// convert opcode to uppercase
 	std::transform(opcode.begin(), opcode.end(),
@@ -245,7 +273,9 @@ int main(int argc, char** argv) {
 		in.close();
 		return 1;
 	}
-
+	
+	pickLabels(in);
+	
 	std::string output = "";
 	while(!in.eof()) {
 		std::string line = "";

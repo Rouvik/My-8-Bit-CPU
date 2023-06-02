@@ -32,4 +32,9 @@
 |SADR|11100|Set the `Address Register` to the value in R Register|
 |SADX|11101|Set the `Address Register` to the value in X Register|
 |SADY|11110|Set the `Address Register` to the value in Y Register|
-
+|CMP|11111|Compares the values in `registers X and Y` and updates CPU flags accordingly|
+|JNE|100000|Jumps to the immediate address specified if the Negative(N) flag is 1|
+|JZE|100001|Jumps to the immediate address specified if the Zero(Z) flag is 1|
+|JOV|100010|Jumps to the immediate address specified if the Overflow(V) flag is 1|
+|JPE|100011|Jumps to the immediate address specified if the Positive(P) flag is 1|
+|HLT|10000000|Stops CPU execution|
