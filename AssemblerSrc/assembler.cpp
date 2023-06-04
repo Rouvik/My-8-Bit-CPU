@@ -137,6 +137,8 @@ std::vector <Operation> oplist {
 	{"JZE", 33, true, true}, // this op uses labels
 	{"JOV", 34, true, true}, // this op uses labels
 	{"JPE", 35, true, true}, // this op uses labels
+	{"GDRAW", 36, false},
+	{"GRESET", 37, false},
 	{"HLT", 128, false}
 };
 

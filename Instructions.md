@@ -37,4 +37,6 @@
 |JZE|100001|Jumps to the immediate address specified if the Zero(Z) flag is 1|
 |JOV|100010|Jumps to the immediate address specified if the Overflow(V) flag is 1|
 |JPE|100011|Jumps to the immediate address specified if the Positive(P) flag is 1|
+|GDRAW|100100|Draws a pixel with thr datas from the X Register(X coord) Y Register(Y coord) and R Resister(Pixel color XTERM-255)|
+|GRESET|100101|Resets the display to all Black (0 in XTERM-255)|
 |HLT|10000000|Stops CPU execution|
