@@ -5,13 +5,16 @@ main:
 	jmp loop
 
 loop:
-	ldy 50
+	ldy 1
+	atx
+	xtr
+	rty
+
 	ldr 118 ; charteuse xterm-255 color
 	gdraw
 
-	ldy 1
-	atx
-	ldy 255
+	ldy 255 ; for comparison
+	
 	cmp
 	jze end
 	jmp loop

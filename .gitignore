@@ -5,4 +5,5 @@
 
 # ignore the assembler in /Programs
 /Programs/rasm
+/Assembler/rasm
 /Programs/*.hex
