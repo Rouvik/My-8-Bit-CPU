@@ -39,4 +39,6 @@
 |JPE|100011|Jumps to the immediate address specified if the Positive(P) flag is 1|
 |GDRAW|100100|Draws a pixel with thr datas from the X Register(X coord) Y Register(Y coord) and R Resister(Pixel color XTERM-255)|
 |GRESET|100101|Resets the display to all Black (0 in XTERM-255)|
+|PCR|100110|Reads in the current program counter location to R register, to help in returning from functions|
+|JTX|100111|Jumps to the location pointed to by the X register|
 |HLT|10000000|Stops CPU execution|
